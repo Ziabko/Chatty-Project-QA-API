@@ -9,7 +9,7 @@ public class CreateUserTest extends BaseTest{
         CreateUserRequest requestBody = new CreateUserRequest("usertest3@gmail.com", "user1234", "user1234", "user");
         Response response = postRequest("/api/auth/register", 201, requestBody);
 
-        SuccessfulCreateUserResponse responseBody = response.as(SuccessfulCreateUserResponse.class);
+        CreateUserResponse responseBody = response.as(CreateUserResponse.class);
     }
 
 }

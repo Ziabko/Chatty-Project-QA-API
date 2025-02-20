@@ -8,8 +8,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 
-public class SuccessfulLoginResponse {
-
+public class CreateUserResponse {
     private String accessToken;
     private String refreshToken;
     private long expiration;

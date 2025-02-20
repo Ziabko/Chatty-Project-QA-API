@@ -30,7 +30,7 @@ public class BaseTest {
     public static Response getRequest(String endPoint, Integer expectedStatusCode){
         Response response = given()
                 .spec(requestSpecification)
-//                .body(body) //у get нет body
+//                .header()
                 .when()
                 .log().all()
                 .get(endPoint)

@@ -8,6 +8,6 @@ public class LoginUserTest extends BaseTest {
         LoginUserRequest requestBody = new LoginUserRequest("usertest3@gmail.com", "user1234");
         Response response = postRequest("/api/auth/login", 200, requestBody);
 
-        SuccessfulCreateUserResponse responseBody = response.as(SuccessfulCreateUserResponse.class);
+        CreateUserResponse responseBody = response.as(CreateUserResponse.class);
     }
 }
