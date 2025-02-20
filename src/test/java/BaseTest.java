@@ -11,6 +11,7 @@ public class BaseTest {
             .setBaseUri(BASE_URI)
             .setContentType(ContentType.JSON)
             .build();
+
     //postRequest method
     public static Response postRequest (String endPoint, Integer expectedStatusCode, Object body) {  //endPoint - адрес после базового адреса
         Response response = given()
@@ -27,10 +28,10 @@ public class BaseTest {
     }
 
     //getRequest method
-    public static Response getRequest(String endPoint, Integer expectedStatusCode){
+    public static Response getRequest(String endPoint, Integer expectedStatusCode, String token){
         Response response = given()
                 .spec(requestSpecification)
-//                .header()
+                .header("Authorization", "Bearer " + token)
                 .when()
                 .log().all()
                 .get(endPoint)
