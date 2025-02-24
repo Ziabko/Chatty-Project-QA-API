@@ -27,6 +27,21 @@ public class BaseTest {
         return response;
     }
 
+    public static Response postRequestWithToken (String endPoint, Integer expectedStatusCode, Object body, String token) {  //endPoint - адрес после базового адреса
+        Response response = given()
+                .spec(requestSpecification)
+                .header("Authorization", "Bearer " + token)
+                .body(body)
+                .when()
+                .log().all()
+                .post(endPoint)
+                .then()
+                .log().all()
+                .statusCode(expectedStatusCode)
+                .extract().response();
+        return response;
+    }
+
     //getRequest method
     public static Response getRequest(String endPoint, Integer expectedStatusCode, String token){
         Response response = given()
@@ -42,9 +57,10 @@ public class BaseTest {
         return response;
 
     }
-    public static Response putRequest(String endPoint, Integer expectedStatusCode, Object body){
+    public static Response putRequest(String endPoint, Integer expectedStatusCode, Object body, String token){
         Response response = given()
                 .spec(requestSpecification)
+                .header("Authorization", "Bearer " + token)
                 .body(body)
                 .when()
                 .log().all()
@@ -58,18 +74,32 @@ public class BaseTest {
     }
 
     //deleteRequest method
-    public static Response deleteRequest(String endPoint, Integer expectetStatusCode){
+    public static Response deleteRequestAsAdmin(String endPoint, Integer expectedStatusCode, String tokenAdmin){
         Response response = given()
                 .spec(requestSpecification)
+                .header("Authorization", "Bearer " + tokenAdmin)
                 .when()
                 .log().all()
                 .delete(endPoint)
                 .then()
                 .log().all()
-                .statusCode(expectetStatusCode)
+                .statusCode(expectedStatusCode)
                 .extract().response();
         return response;
+    }
 
+    public static Response deleteRequest(String endPoint, Integer expectedStatusCode, String token){
+        Response response = given()
+                .spec(requestSpecification)
+                .header("Authorization", "Bearer " + token)
+                .when()
+                .log().all()
+                .delete(endPoint)
+                .then()
+                .log().all()
+                .statusCode(expectedStatusCode)
+                .extract().response();
+        return response;
     }
     
 }
