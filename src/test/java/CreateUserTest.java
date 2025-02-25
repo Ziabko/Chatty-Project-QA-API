@@ -8,9 +8,9 @@ public class CreateUserTest extends BaseTest{
     @Test
     public void successCreatedUser (){
         CreateUserRequest createUserRequest = new CreateUserRequest("usertes4154@gmail.com", "user1234", "user1234", "user");
-        Response response = postRequest("/api/auth/register", 201, createUserRequest);
+        Response responseCreate = postRequest("/api/auth/register", 201, createUserRequest);
 
-        CreateUserResponse createUserResponseBody = response.as(CreateUserResponse.class);
+        CreateUserResponse createUserResponseBody = responseCreate.as(CreateUserResponse.class);
 
         //1. Check that Access token, refresh token and expiration are not empty
         assertFalse(createUserResponseBody.getAccessToken().isEmpty());
