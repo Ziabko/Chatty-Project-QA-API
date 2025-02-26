@@ -11,7 +11,6 @@ public class GetUserInformationTest extends BaseTest {
     public void getMyUserInformation(){
         LoginUserRequest requestBody = new LoginUserRequest("z0667272624@gmail.com", "UserOlga1");
         Response response = postRequest("/api/auth/login", 200, requestBody);
-
         LoginUserResponse responseBody = response.as(LoginUserResponse.class);
         String token = responseBody.getAccessToken();
 
