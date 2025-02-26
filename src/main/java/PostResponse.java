@@ -1,3 +1,4 @@
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -7,6 +8,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@JsonIgnoreProperties(ignoreUnknown = true)
 
 public class PostResponse {
     private String id;
@@ -16,7 +18,9 @@ public class PostResponse {
     private String imageUrl;
     private String publishDate;
     private String updatedAt;
+    private String createdAt;
     private Boolean draft;
     private String userId;
+
 
 }

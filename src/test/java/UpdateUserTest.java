@@ -17,14 +17,14 @@ public class UpdateUserTest extends BaseTest {
         String userId = userInfo.getId();
 
         UserInformationRequest updateRequest = new UserInformationRequest();
-        updateRequest.setName("Mia");
+        updateRequest.setName("Miaa");
         Response responseUpdate = putRequest("/api/users/" + userId, 200, updateRequest, token);
 
         // 1. Check that name changed
         Response updatedUserResponse = getRequest("/api/me", 200, token);
         UserInformationResponse updatedUserInfo = updatedUserResponse.as(UserInformationResponse.class);
 
-        assertEquals("Mia", updatedUserInfo.getName());
+        assertEquals("Miaa", updatedUserInfo.getName());
 
 
     }

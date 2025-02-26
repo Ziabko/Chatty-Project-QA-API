@@ -16,8 +16,9 @@ public class UpdatePostTest extends BaseTest {
         String postId = postResponse.getId();
 
         PostRequest updatePost = new PostRequest("New Title", "New Title", "New Title", "", "", false);// если не хочу менять Title????????????
-
         Response updatePostResponse = putRequest("/api/posts/" + postId,200, updatePost, token);
+
+
 
     }
 }

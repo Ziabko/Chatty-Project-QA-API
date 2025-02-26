@@ -24,7 +24,7 @@ public class CreatePostTest extends BaseTest {
         //2. Check that created post have id
         assertFalse(postResponse.getId().isEmpty());
 
-        //3. Check that created post have ussr id
+        //3. Check that created post have user id
         assertFalse(postResponse.getUserId().isEmpty());
     }
 }
