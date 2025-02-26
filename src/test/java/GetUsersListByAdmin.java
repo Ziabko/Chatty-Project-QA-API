@@ -20,8 +20,6 @@ public class GetUsersListByAdmin extends BaseTest {
         String token = responseBody.getAccessToken();
         Response response1 = getRequest("/api/users?skip=0&limit=5", 200, token);
 
-
-
         // 1. Checki that 5 users on the list
         JsonPath jsonPath = response1.jsonPath();  //Extract JSON response
         List<Map<String, Object>> users = jsonPath.getList("");   // get users list

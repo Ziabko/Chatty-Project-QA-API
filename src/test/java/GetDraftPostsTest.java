@@ -1,6 +1,8 @@
 import io.restassured.response.Response;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
 public class GetDraftPostsTest extends BaseTest {
 @Test
 
@@ -11,9 +13,8 @@ public class GetDraftPostsTest extends BaseTest {
     String token = loginUserResponse.getAccessToken();
 
     Response getDraftResponse = getRequest("/api/posts/drafts", 200, token);
-    PostResponse postResponse = getDraftResponse.as(PostResponse.class);
+//    PostResponse postResponse = getDraftResponse.as(PostResponse.class);
+    List<PostResponse> getUsersPostResponse = getDraftResponse.jsonPath().getList("drafts", PostResponse.class);
 
-
-
-}
+    }
 }

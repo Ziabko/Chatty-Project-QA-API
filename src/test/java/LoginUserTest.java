@@ -16,5 +16,7 @@ public class LoginUserTest extends BaseTest {
         assertFalse(loginUserResponse.getRefreshToken().isEmpty());
         assertNotNull(loginUserResponse.getExpiration());
 
+        // невалидные проверить
+
     }
 }

@@ -24,6 +24,5 @@ public class DeletePostTest extends BaseTest {
         assertEquals(204, deletePostResponse.statusCode());
 
 
-
     }
 }
