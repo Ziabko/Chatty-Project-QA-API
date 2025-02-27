@@ -16,15 +16,15 @@ public class CreatePostTest extends BaseTest {
 
         PostResponse postResponse = createPostResponse.as(PostResponse.class);
 
-        //1. Check that title are equal (description and body too)
-        assertEquals(postRequest.getTitle(), postResponse.getTitle());
-        assertEquals(postRequest.getDescription(), postResponse.getDescription());
-        assertEquals(postRequest.getBody(), postResponse.getBody());
+        //1. Check that titles are equal (description and body too)
+        assertEquals(postRequest.getTitle(), postResponse.getTitle(), "Titles are not equal");
+        assertEquals(postRequest.getDescription(), postResponse.getDescription(),"Descriptions are not equal");
+        assertEquals(postRequest.getBody(), postResponse.getBody(), "Body are not equal");
 
         //2. Check that created post have id
-        assertFalse(postResponse.getId().isEmpty());
+        assertFalse(postResponse.getId().isEmpty(), "Created post doesn't have id");
 
         //3. Check that created post have user id
-        assertFalse(postResponse.getUserId().isEmpty());
+        assertFalse(postResponse.getUserId().isEmpty(), "Created post doesn't have userId");
     }
 }
