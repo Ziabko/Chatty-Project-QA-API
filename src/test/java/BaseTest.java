@@ -2,6 +2,7 @@ import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
+import org.junit.jupiter.api.BeforeEach;
 
 import static io.restassured.RestAssured.given;
 
@@ -11,6 +12,14 @@ public class BaseTest {
             .setBaseUri(BASE_URI)
             .setContentType(ContentType.JSON)
             .build();
+
+    public String loginAndGetTokenUser() {
+        LoginUserRequest loginUserRequest = new LoginUserRequest("z0667272624@gmail.com", "UserOlga1");
+        Response responseLogin = postRequest("/api/auth/login", 200, loginUserRequest);
+        LoginUserResponse loginUserResponse = responseLogin.as(LoginUserResponse.class);
+        return loginUserResponse.getAccessToken();
+    }
+
 
     //postRequest method
     public static Response postRequest (String endPoint, Integer expectedStatusCode, Object body) {  //endPoint - адрес после базового адреса

@@ -6,11 +6,12 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class UpdateUserTest extends BaseTest {
     @Test
     public void updateUser (){
-        LoginUserRequest loginUserRequest = new LoginUserRequest("z0667272624@gmail.com", "UserOlga1");
-        Response response = postRequest("/api/auth/login", 200, loginUserRequest);
-        LoginUserResponse responseBody = response.as(LoginUserResponse.class);
+//        LoginUserRequest loginUserRequest = new LoginUserRequest("z0667272624@gmail.com", "UserOlga1");
+//        Response response = postRequest("/api/auth/login", 200, loginUserRequest);
+//        LoginUserResponse responseBody = response.as(LoginUserResponse.class);
+//        String token = responseBody.getAccessToken();
 
-        String token = responseBody.getAccessToken();
+        String token = loginAndGetTokenUser();
 
         Response updateUser = getRequest("/api/me", 200, token);
         UserInformationResponse userInfo = updateUser.as(UserInformationResponse.class);

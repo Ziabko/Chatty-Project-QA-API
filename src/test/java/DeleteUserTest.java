@@ -1,13 +1,20 @@
+import com.github.javafaker.Faker;
 import io.restassured.response.Response;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class DeleteUserTest extends BaseTest {
+
+    Faker faker = new Faker();
+
     @Test
     public void successDeleteUser() {
 
-        CreateUserRequest createUserRequest = new CreateUserRequest("user2333926e4@gmail.com", "user1234", "user1234", "user");
+        String userEmail = faker.internet().emailAddress();
+        String serPassword = faker.internet().password();
+
+        CreateUserRequest createUserRequest = new CreateUserRequest(userEmail, serPassword, serPassword, "user");
         Response response = postRequest("/api/auth/register", 201, createUserRequest);
         CreateUserResponse responseBody = response.as(CreateUserResponse.class);
         String token = responseBody.getAccessToken();

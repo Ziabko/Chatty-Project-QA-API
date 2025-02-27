@@ -11,18 +11,20 @@ public class UploadImageTest extends BaseTest {
     @Test
     public void uploadImage() {
 
-        LoginUserRequest loginUserRequest = new LoginUserRequest("z0667272624@gmail.com", "UserOlga1");
-        Response response = postRequest("/api/auth/login", 200, loginUserRequest);
-        LoginUserResponse responseBodyLogin = response.as(LoginUserResponse.class);
-        String token = responseBodyLogin.getAccessToken();
+//        LoginUserRequest loginUserRequest = new LoginUserRequest("z0667272624@gmail.com", "UserOlga1");
+//        Response response = postRequest("/api/auth/login", 200, loginUserRequest);
+//        LoginUserResponse responseBodyLogin = response.as(LoginUserResponse.class);
+//        String token = responseBodyLogin.getAccessToken();
 
-        String imagePath = new File("src/test/resources/image/smallimage.jpg").getAbsolutePath();
-        File imageFile = new File(imagePath);
+        String token = loginAndGetTokenUser();
+
+        File imageFile = new File("src/test/resources/image/smallimage.jpg");
+
 
         Response uploadResponse = given()
                 .header("Authorization", "Bearer " + token)
                 .contentType("multipart/form-data")
-                .multiPart("file", imageFile)
+                .multiPart("image", imageFile, "image/jpg")
                 .when()
                 .log().all()
                 .post("http://chatty.telran-edu.de:8989/api/images")
@@ -32,7 +34,6 @@ public class UploadImageTest extends BaseTest {
                 .extract().response();
 
         UploadImageResponse uploadImageResponse = uploadResponse.as(UploadImageResponse.class);
-
 
     }
 

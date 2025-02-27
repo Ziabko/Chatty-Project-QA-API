@@ -7,10 +7,12 @@ public class GetPostById extends BaseTest {
 
     @Test
     public void getPostsByID() {
-        LoginUserRequest loginUserRequest = new LoginUserRequest("z0667272624@gmail.com", "UserOlga1");
-        Response responseLogin = postRequest("/api/auth/login", 200, loginUserRequest);
-        LoginUserResponse loginUserResponse = responseLogin.as(LoginUserResponse.class);
-        String token = loginUserResponse.getAccessToken();
+//        LoginUserRequest loginUserRequest = new LoginUserRequest("z0667272624@gmail.com", "UserOlga1");
+//        Response responseLogin = postRequest("/api/auth/login", 200, loginUserRequest);
+//        LoginUserResponse loginUserResponse = responseLogin.as(LoginUserResponse.class);
+//        String token = loginUserResponse.getAccessToken();
+
+        String token = loginAndGetTokenUser();
 
         PostRequest postRequest = new PostRequest("Get post by id", "Get post by id description", "Get post by id body", "", "", false);
         Response createPostResponse = postRequestWithToken("/api/posts", 201, postRequest, token);

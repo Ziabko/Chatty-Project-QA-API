@@ -9,10 +9,11 @@ public class UpdatePasswordTest extends BaseTest {
     public void updatePassword (){
         String oldPassword = "UserOlga2";
         String newPassword = "UserOlga1";
-        LoginUserRequest loginUserRequest = new LoginUserRequest("z0667272624@gmail.com", oldPassword);
-        Response response = postRequest("/api/auth/login", 200, loginUserRequest);
-        LoginUserResponse responseBodyLogin = response.as(LoginUserResponse.class);
-        String token = responseBodyLogin.getAccessToken();
+//        LoginUserRequest loginUserRequest = new LoginUserRequest("z0667272624@gmail.com", oldPassword);
+//        Response response = postRequest("/api/auth/login", 200, loginUserRequest);
+//        LoginUserResponse responseBodyLogin = response.as(LoginUserResponse.class);
+//        String token = responseBodyLogin.getAccessToken();
+        String token = loginAndGetTokenUser();
 
         UpdatePasswordRequest updatePasswordRequest = new UpdatePasswordRequest(oldPassword, newPassword, newPassword);
         Response updatePasswordResponse = putRequest("/api/user/password/update", 200, updatePasswordRequest, token);
