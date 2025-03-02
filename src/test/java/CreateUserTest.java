@@ -31,7 +31,6 @@ public class CreateUserTest extends BaseTest {
 
     @Test
     public void unsuccessfulCreateUserInvalidEmail() {
-
         CreateUserRequest createUserRequest = new CreateUserRequest(invalidField, userPassword, userPassword, "user");
         Response responseCreate = postRequest("/api/auth/register", 400, createUserRequest);
 
@@ -42,14 +41,14 @@ public class CreateUserTest extends BaseTest {
         assertNull(responseCreate.jsonPath().getString("accessToken"), "Access token is not empty");
 
         // 3. Check that the message contains the expected text
-        List<String> errorMessages = responseCreate.jsonPath().getList("email", String.class);
-        assertTrue(errorMessages.contains("Email is not valid."), "Expected error message is missing. Actual: " + errorMessages);
+        String responseBody = responseCreate.getBody().asString();
+        assertTrue(responseBody.contains("Email is not valid."));
+
     }
 
 
     @Test
     public void unsuccessfulCreateUserInvalidPassword() {
-
         CreateUserRequest createUserRequest = new CreateUserRequest(userEmail, invalidField, invalidField, "user");
         Response responseCreate = postRequest("/api/auth/register", 400, createUserRequest);
 
@@ -62,12 +61,78 @@ public class CreateUserTest extends BaseTest {
         // 3. Check that the message contains the expected text
         String responseBody = responseCreate.getBody().asString();
         assertTrue(responseBody.contains("Password must contain at least 8 characters"));
-        assertTrue(responseBody.contains("Password must contain letters and numbers"));
-
-
+        assertTrue(responseBody.contains("Password must contain letters and numbers"), "Unexpected error message");
 
     }
+
+    @Test
+    public void unsuccessfulCreateUserInvalidConfirmPassword() {
+        CreateUserRequest createUserRequest = new CreateUserRequest(userEmail, userPassword, invalidField, "user");
+        Response responseCreate = postRequest("/api/auth/register", 400, createUserRequest);
+
+        // 1. Check that the status code is 400.
+        assertEquals(400, responseCreate.getStatusCode(), "Status code is not 400");
+
+        // 2. Check that the accessToken response is empty
+        assertNull(responseCreate.jsonPath().getString("accessToken"), "Access token is not empty");
+
+        // 3. Check that the message contains the expected text
+        String responseBody = responseCreate.getBody().asString();
+        assertTrue(responseBody.contains("Password mismatch!"), "Unexpected error message");
+
     }
+
+    @Test
+    public void unsuccessfulCreateUserEmptyEmail() {
+        CreateUserRequest createUserRequest = new CreateUserRequest("", userPassword, userPassword, "user");
+        Response responseCreate = postRequest("/api/auth/register", 400, createUserRequest);
+
+        // 1. Check that the status code is 400.
+        assertEquals(400, responseCreate.getStatusCode(), "Status code is not 400");
+
+        // 2. Check that the accessToken response is empty
+        assertNull(responseCreate.jsonPath().getString("accessToken"), "Access token is not empty");
+
+        // 3. Check that the message contains the expected text
+        String responseBody = responseCreate.getBody().asString();
+        assertTrue(responseBody.contains("Email cannot be empty"), "Unexpected error message");
+
+    }
+
+    @Test
+    public void unsuccessfulCreateUserEmptyPassword() {
+        CreateUserRequest createUserRequest = new CreateUserRequest(userEmail, "", userPassword, "user");
+        Response responseCreate = postRequest("/api/auth/register", 400, createUserRequest);
+
+        // 1. Check that the status code is 400.
+        assertEquals(400, responseCreate.getStatusCode(), "Status code is not 400");
+
+        // 2. Check that the accessToken response is empty
+        assertNull(responseCreate.jsonPath().getString("accessToken"), "Access token is not empty");
+
+        // 3. Check that the message contains the expected text
+        String responseBody = responseCreate.getBody().asString();
+        assertTrue(responseBody.contains("Password cannot be empty"), "Unexpected error message");
+
+    }
+
+    @Test
+    public void unsuccessfulCreateUserEmptyConfirmPassword() {
+        CreateUserRequest createUserRequest = new CreateUserRequest(userEmail, userPassword, "", "user");
+        Response responseCreate = postRequest("/api/auth/register", 400, createUserRequest);
+
+        // 1. Check that the status code is 400.
+        assertEquals(400, responseCreate.getStatusCode(), "Status code is not 400");
+
+        // 2. Check that the accessToken response is empty
+        assertNull(responseCreate.jsonPath().getString("accessToken"), "Access token is not empty");
+
+        // 3. Check that the message contains the expected text
+        String responseBody = responseCreate.getBody().asString();
+        assertTrue(responseBody.contains("You need to confirm your password"), "Unexpected error message");
+
+    }
+}
 
 
 

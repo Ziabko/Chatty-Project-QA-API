@@ -39,8 +39,5 @@ public class UpdateUserTest extends BaseTest {
         // 4. Check that the response contains the correct status code
         assertEquals(200, responseUpdate.getStatusCode(), "Unexpected status code after user update!");
 
-
-
-
     }
 }
