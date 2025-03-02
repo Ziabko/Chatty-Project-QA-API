@@ -6,18 +6,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class DeleteUserTest extends BaseTest {
 
-    Faker faker = new Faker();
-
     @Test
     public void successDeleteUser() {
 
-        String userEmail = faker.internet().emailAddress();
-        String serPassword = faker.internet().password();
-
-        CreateUserRequest createUserRequest = new CreateUserRequest(userEmail, serPassword, serPassword, "user");
-        Response response = postRequest("/api/auth/register", 201, createUserRequest);
-        CreateUserResponse responseBody = response.as(CreateUserResponse.class);
-        String token = responseBody.getAccessToken();
+        String token = createRandomUser();
 
         Response responseUser = getRequest("/api/me", 200, token);
         UserInformationResponse userInfo = responseUser.as(UserInformationResponse.class);

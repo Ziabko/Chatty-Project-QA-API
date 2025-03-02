@@ -8,10 +8,6 @@ import static org.junit.jupiter.api.Assertions.*;
 public class GetPostByUserTest extends BaseTest {
     @Test
     public void getPostByUser() {
-//        LoginUserRequest loginUserRequest = new LoginUserRequest("z0667272624@gmail.com", "UserOlga1");
-//        Response responseLogin = postRequest("/api/auth/login", 200, loginUserRequest);
-//        LoginUserResponse loginUserResponse = responseLogin.as(LoginUserResponse.class);
-//        String token = loginUserResponse.getAccessToken();
 
         String token = loginAndGetTokenUser();
 

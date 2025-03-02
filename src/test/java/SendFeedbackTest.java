@@ -1,3 +1,4 @@
+import com.github.javafaker.Faker;
 import io.restassured.response.Response;
 import org.junit.jupiter.api.Test;
 
@@ -6,16 +7,16 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 
 public class SendFeedbackTest extends BaseTest {
 
+    Faker faker = new Faker();
+    String userEmail = faker.internet().emailAddress();
+    String content = faker.lorem().paragraph();
+    String name = faker.lorem().word();
+
     @Test
     public void sendFeedback (){
-//        LoginUserRequest loginUserRequest = new LoginUserRequest("z0667272624@gmail.com", "UserOlga1");
-//        Response response = postRequest("/api/auth/login", 200, loginUserRequest);
-//        LoginUserResponse responseBodyLogin = response.as(LoginUserResponse.class);
-//        String token = responseBodyLogin.getAccessToken();
-
         String token = loginAndGetTokenUser();
 
-        SendFeedbackRequest sendFeedbackRequest = new SendFeedbackRequest("Leo", "z0667272624@gmail.com", "Testing");
+        SendFeedbackRequest sendFeedbackRequest = new SendFeedbackRequest(name, userEmail, content);
         Response response1 = postRequest("/api/feedback", 201, sendFeedbackRequest);
 
         SendFeedbackRequest feedbackRequest = response1.as(SendFeedbackRequest.class);
@@ -28,7 +29,6 @@ public class SendFeedbackTest extends BaseTest {
         assertFalse(feedbackResponse.getContent().isEmpty());
 
         //3. check that without login should be not feedback
-        Response unauthorizedResponse = postRequest("/api/feedback", 401, sendFeedbackRequest);
-        assertEquals(401, unauthorizedResponse.getStatusCode(), "Feedback should not be allowed without authentication!");
+        assertEquals(401, response1.getStatusCode(), "Feedback should not be allowed without authentication!");
     }
 }

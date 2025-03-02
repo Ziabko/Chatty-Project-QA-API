@@ -1,3 +1,4 @@
+import com.github.javafaker.Faker;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
@@ -7,7 +8,7 @@ import org.junit.jupiter.api.BeforeEach;
 import static io.restassured.RestAssured.given;
 
 public class BaseTest {
-    static  String BASE_URI = "http://chatty.telran-edu.de:8989";
+    static String BASE_URI = "http://chatty.telran-edu.de:8989";
     static RequestSpecification requestSpecification = new RequestSpecBuilder()
             .setBaseUri(BASE_URI)
             .setContentType(ContentType.JSON)
@@ -20,9 +21,28 @@ public class BaseTest {
         return loginUserResponse.getAccessToken();
     }
 
+    public String createRandomUser() {
+        Faker faker = new Faker();
+        String userEmail = faker.internet().emailAddress();
+        String userPassword = faker.internet().password();
+        CreateUserRequest createUserRequest = new CreateUserRequest(userEmail, userPassword, userPassword, "user");
+        Response response = postRequest("/api/auth/register", 201, createUserRequest);
+        CreateUserResponse responseBody = response.as(CreateUserResponse.class);
+        return responseBody.getAccessToken();
+    }
 
-    //postRequest method
-    public static Response postRequest (String endPoint, Integer expectedStatusCode, Object body) {  //endPoint - адрес после базового адреса
+    public String createRandomAdmin() {
+        Faker faker = new Faker();
+        String userEmail = faker.internet().emailAddress();
+        String serPassword = faker.internet().password();
+        CreateUserRequest createUserRequest = new CreateUserRequest(userEmail, serPassword, serPassword, "admin");
+        Response response = postRequest("/api/auth/register", 201, createUserRequest);
+        CreateUserResponse responseBody = response.as(CreateUserResponse.class);
+        return responseBody.getAccessToken();
+    }
+
+
+    public static Response postRequest(String endPoint, Integer expectedStatusCode, Object body) {  //endPoint - адрес после базового адреса
         Response response = given()
                 .spec(requestSpecification)
                 .body(body)
@@ -36,7 +56,7 @@ public class BaseTest {
         return response;
     }
 
-    public static Response postRequestWithToken (String endPoint, Integer expectedStatusCode, Object body, String token) {  //endPoint - адрес после базового адреса
+    public static Response postRequestWithToken(String endPoint, Integer expectedStatusCode, Object body, String token) {  //endPoint - адрес после базового адреса
         Response response = given()
                 .spec(requestSpecification)
                 .header("Authorization", "Bearer " + token)
@@ -51,8 +71,8 @@ public class BaseTest {
         return response;
     }
 
-    //getRequest method
-    public static Response getRequest(String endPoint, Integer expectedStatusCode, String token){
+
+    public static Response getRequest(String endPoint, Integer expectedStatusCode, String token) {
         Response response = given()
                 .spec(requestSpecification)
                 .header("Authorization", "Bearer " + token)
@@ -66,7 +86,8 @@ public class BaseTest {
         return response;
 
     }
-    public static Response putRequest(String endPoint, Integer expectedStatusCode, Object body, String token){
+
+    public static Response putRequest(String endPoint, Integer expectedStatusCode, Object body, String token) {
         Response response = given()
                 .spec(requestSpecification)
                 .header("Authorization", "Bearer " + token)
@@ -82,8 +103,7 @@ public class BaseTest {
 
     }
 
-    //deleteRequest method
-    public static Response deleteRequestAsAdmin(String endPoint, Integer expectedStatusCode, String tokenAdmin){
+    public static Response deleteRequestAsAdmin(String endPoint, Integer expectedStatusCode, String tokenAdmin) {
         Response response = given()
                 .spec(requestSpecification)
                 .header("Authorization", "Bearer " + tokenAdmin)
@@ -97,7 +117,7 @@ public class BaseTest {
         return response;
     }
 
-    public static Response deleteRequest(String endPoint, Integer expectedStatusCode, String token){
+    public static Response deleteRequest(String endPoint, Integer expectedStatusCode, String token) {
         Response response = given()
                 .spec(requestSpecification)
                 .header("Authorization", "Bearer " + token)
@@ -110,5 +130,5 @@ public class BaseTest {
                 .extract().response();
         return response;
     }
-    
+
 }

@@ -10,14 +10,10 @@ public class GetDraftPostsTest extends BaseTest {
 @Test
 
     public void getDraftPosts(){
-//    LoginUserRequest loginUserRequest = new LoginUserRequest("z0667272624@gmail.com", "UserOlga1");
-//    Response responseLogin = postRequest("/api/auth/login", 200, loginUserRequest);
-//    LoginUserResponse loginUserResponse = responseLogin.as(LoginUserResponse.class);
-//    String token = loginUserResponse.getAccessToken();
+
     String token = loginAndGetTokenUser();
 
     Response getDraftResponse = getRequest("/api/posts/drafts", 200, token);
-//    List<PostResponse> getUsersPostResponse = getDraftResponse.jsonPath().getList("drafts", PostResponse.class);
     List<PostResponse> getUsersPostResponse = getDraftResponse.as(new TypeRef<List<PostResponse>>() {});
 
     Response response1 = getRequest("/api/me", 200, token);
@@ -43,7 +39,6 @@ public class GetDraftPostsTest extends BaseTest {
     for (PostResponse post : getUsersPostResponse) {
         assertNotNull(post.getDraft(), "Draft status must be not null!");
     }
-
 
     }
 }
