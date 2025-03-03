@@ -17,7 +17,6 @@ public class GetPostById extends BaseTest {
         Response getPostByIdResponse = getRequest("/api/posts/" + postId, 200, token);
         PostResponse getPostResponse = getPostByIdResponse.as(PostResponse.class);
 
-
         //1. Check that the id of the received post matches the id of the created post
         assertEquals(postId, getPostResponse.getId(), "The post ID doesn't match!");
 
@@ -35,5 +34,8 @@ public class GetPostById extends BaseTest {
 
 
     }
+
+
+    //invalid id
 
 }

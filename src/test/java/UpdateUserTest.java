@@ -35,9 +35,5 @@ public class UpdateUserTest extends BaseTest {
 
         // 3. Check that the user ID has not changed since the update
         assertEquals(userId, updatedUserInfo.getId(), "User ID should remain the same after update!");
-
-        // 4. Check that the response contains the correct status code
-        assertEquals(200, responseUpdate.getStatusCode(), "Unexpected status code after user update!");
-
     }
 }

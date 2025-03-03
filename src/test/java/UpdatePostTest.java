@@ -22,7 +22,7 @@ public class UpdatePostTest extends BaseTest {
         PostResponse postResponse = createPostResponse.as(PostResponse.class);
         String postId = postResponse.getId();
 
-        PostRequest updatePost = new PostRequest(wordRandom + titleRandom, wordRandom + descriptionRandom, wordRandom + bodyRandom, "", "", false);// если не хочу менять Title????????????
+        PostRequest updatePost = new PostRequest(wordRandom + titleRandom, "wordRandom + descriptionRandom", wordRandom + bodyRandom, "", "", false);// если не хочу менять Title????????????
         Response updatePostResponse = putRequest("/api/posts/" + postId,200, updatePost, token);
         PostResponse postResponse1 = updatePostResponse.as(PostResponse.class);
 

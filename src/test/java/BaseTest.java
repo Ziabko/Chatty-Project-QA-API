@@ -21,6 +21,13 @@ public class BaseTest {
         return loginUserResponse.getAccessToken();
     }
 
+    public String loginAndGetTokenAdmin() {
+        LoginUserRequest loginUserRequest = new LoginUserRequest("zyablik2004@ukr.net", "AdminOlga1");
+        Response responseLogin = postRequest("/api/auth/login", 200, loginUserRequest);
+        LoginUserResponse loginUserResponse = responseLogin.as(LoginUserResponse.class);
+        return loginUserResponse.getAccessToken();
+    }
+
     public String createRandomUser() {
         Faker faker = new Faker();
         String userEmail = faker.internet().emailAddress();

@@ -14,7 +14,7 @@ public class SendFeedbackTest extends BaseTest {
 
     @Test
     public void sendFeedback (){
-        String token = loginAndGetTokenUser();
+//        String token = loginAndGetTokenUser();
 
         SendFeedbackRequest sendFeedbackRequest = new SendFeedbackRequest(name, userEmail, content);
         Response response1 = postRequest("/api/feedback", 201, sendFeedbackRequest);

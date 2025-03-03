@@ -96,10 +96,7 @@ public class LoginUserTest extends BaseTest {
         LoginUserRequest loginUserRequest = new LoginUserRequest("", userPassword);
         Response responseLogin = postRequest("/api/auth/login", 400, loginUserRequest);
 
-        //1. Check that response code is 400
-        assertEquals(400, responseLogin.getStatusCode());
-
-        //2.  Check error message
+        //1.  Check error message
         String responseBody = responseLogin.getBody().asString();
         assertTrue(responseBody.contains("Email cannot be empty"));
         assertTrue(responseBody.contains("Invalid email format"));
@@ -114,15 +111,30 @@ public class LoginUserTest extends BaseTest {
         LoginUserRequest loginUserRequest = new LoginUserRequest(userEmail, "");
         Response responseLogin = postRequest("/api/auth/login", 400, loginUserRequest);
 
-        //1. Check that response code is 400
-        assertEquals(400, responseLogin.getStatusCode());
-
-        //2.  Check error message
+        //1.  Check error message
         String responseBody = responseLogin.getBody().asString();
         assertTrue(responseBody.contains("Password cannot be empty"));
         assertTrue(responseBody.contains("Password must contain letters and numbers"));
         assertTrue(responseBody.contains("Password must contain at least 8 characters"));
-
-
     }
+
+    @Test
+    public void loginUserWithPutMethod() {
+        LoginUserRequest loginUserRequest = new LoginUserRequest(userEmail, userPassword);
+        Response response = putRequest("/api/auth/login", 405, loginUserRequest, null);
+        assertEquals(405, response.getStatusCode(), "Expected 405 Method Not Allowed for PUT on /api/auth/login");
+    }
+
+    @Test
+    public void loginUserWithDeleteMethod() {
+        Response response = deleteRequest("/api/auth/login", 405, null);
+        assertEquals(405, response.getStatusCode(), "Expected 405 Method Not Allowed for DELETE on /api/auth/login");
+    }
+
+    @Test
+    public void loginUserWithGetMethod() {
+        Response response = getRequest("/api/auth/login", 405, null);
+        assertEquals(405, response.getStatusCode(), "Expected 405 Method Not Allowed for GET on /api/auth/login");
+    }
+
 }

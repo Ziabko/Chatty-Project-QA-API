@@ -38,9 +38,7 @@ public class CreatePostTest extends BaseTest {
         PostRequest postRequest = new PostRequest("", descriptionRandom, bodyRandom, "", "", false);
         Response createPostResponse = postRequestWithToken("/api/posts", 400, postRequest, token);
 
-        //1. Check that status code is 400
-        assertEquals(400, createPostResponse.getStatusCode(), "Unexpected status code. It must be 400 by empty title");
-        //2. Check error message
+       //1. Check error message
         String responseBody = createPostResponse.getBody().asString();
         assertTrue(responseBody.contains("Title can not be empty!"));
 
@@ -52,9 +50,7 @@ public class CreatePostTest extends BaseTest {
         PostRequest postRequest = new PostRequest(titleRandom, "", bodyRandom, "", "", false);
         Response createPostResponse = postRequestWithToken("/api/posts", 400, postRequest, token);
 
-        //1. Check that status code is 400
-        assertEquals(400, createPostResponse.getStatusCode(), "Unexpected status code. It must be 400 by empty Description");
-        //2. Check error message
+        //1. Check error message
         String responseBody = createPostResponse.getBody().asString();
         assertTrue(responseBody.contains("Description can not be empty!"));
 
@@ -66,13 +62,9 @@ public class CreatePostTest extends BaseTest {
         PostRequest postRequest = new PostRequest(titleRandom, descriptionRandom, "", "", "", false);
         Response createPostResponse = postRequestWithToken("/api/posts", 400, postRequest, token);
 
-        //1. Check that status code is 400
-        assertEquals(400, createPostResponse.getStatusCode(), "Unexpected status code. It must be 400 by empty body.");
-        //2. Check error message
+        //1. Check error message
         String responseBody = createPostResponse.getBody().asString();
         assertTrue(responseBody.contains("Body can not be empty!"));
-
-
     }
 
     @Test
@@ -82,9 +74,7 @@ public class CreatePostTest extends BaseTest {
         PostRequest postRequest = new PostRequest(longTitle, descriptionRandom, bodyRandom, "", "", false);
         Response createPostResponse = postRequestWithToken("/api/posts", 400, postRequest, token);
 
-        //1. Check that status code is 400
-        assertEquals(400, createPostResponse.getStatusCode(), "Unexpected status code. It must be 400 by long title.");
-        //2. Check error message
+        //1. Check error message
         String responseBody = createPostResponse.getBody().asString();
         assertTrue(responseBody.contains("Title must contain from 1 to 40 characters"));
 
@@ -97,9 +87,7 @@ public class CreatePostTest extends BaseTest {
         PostRequest postRequest = new PostRequest(titleRandom, "", bodyRandom, "", "", false);
         Response createPostResponse = postRequestWithToken("/api/posts", 400, postRequest, token);
 
-        //1. Check that status code is 400
-        assertEquals(400, createPostResponse.getStatusCode(), "Unexpected status code. It must be 400 by long Description.");
-        //2. Check error message
+        //1. Check error message
         String responseBody = createPostResponse.getBody().asString();
         assertTrue(responseBody.contains("Description must contain from 1 to 100 characters"));
     }
@@ -111,9 +99,7 @@ public class CreatePostTest extends BaseTest {
         PostRequest postRequest = new PostRequest(titleRandom, descriptionRandom, longBody, "", "", false);
         Response createPostResponse = postRequestWithToken("/api/posts", 400, postRequest, token);
 
-        //1. Check that status code is 400
-        assertEquals(400, createPostResponse.getStatusCode(), "Unexpected status code. It must be 400 by long body.");
-        //2. Check error message
+        //1. Check error message
         String responseBody = createPostResponse.getBody().asString();
         assertTrue(responseBody.contains("Body must contain from 1 to 1000 characters"));
     }

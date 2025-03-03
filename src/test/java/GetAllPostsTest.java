@@ -15,9 +15,7 @@ public class GetAllPostsTest extends BaseTest {
 
         int postsNumber = 3;
         Response allPostsResponse = getRequest("/api/posts?skip=0&limit=" + postsNumber, 200, token);
-//        List<PostResponse> getUsersPostResponse = allPostsResponse.jsonPath().getList("posts", PostResponse.class);
         List<PostResponse> getUsersPostResponse = allPostsResponse.as(new TypeRef<List<PostResponse>>() {});
-
 
         //1. Check that list is not empty
         assertFalse(getUsersPostResponse.isEmpty(), "The post list is empty!");
